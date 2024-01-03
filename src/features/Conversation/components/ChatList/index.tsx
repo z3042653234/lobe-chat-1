@@ -1,10 +1,10 @@
-import { Fragment, memo } from 'react';
+import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import type { ChatMessage } from '@/types/message';
 
-import HistoryDivider from './HistoryDivider';
-import Item, { ListItemProps } from './Item';
+import { ListItemProps } from './Item';
+import List from './List';
 import { useStyles } from './style';
 
 export interface ChatListProps extends ListItemProps {
@@ -49,37 +49,26 @@ const ChatList = memo<ChatListProps>(
   }) => {
     const { cx, styles } = useStyles();
 
+    const props = {
+      enableHistoryCount,
+      historyCount,
+      onActionsClick,
+      onAvatarsClick,
+      onMessageChange,
+      renderActions,
+      renderErrorMessages,
+      renderItems,
+      renderMessages,
+      renderMessagesExtra,
+      showTitle,
+      text,
+      type,
+    };
     return (
-      <Flexbox className={cx(styles.container, className)}>
-        {data.map((item, index) => {
-          const itemProps = {
-            loading: loadingId === item.id,
-            onActionsClick,
-            onAvatarsClick,
-            onMessageChange,
-            renderActions,
-            renderErrorMessages,
-            renderItems,
-            renderMessages,
-            renderMessagesExtra,
-            showTitle,
-            text,
-            type,
-          };
-
-          const historyLength = data.length;
-          const enableHistoryDivider =
-            enableHistoryCount &&
-            historyLength > historyCount &&
-            historyCount === historyLength - index + 1;
-
-          return (
-            <Fragment key={item.id}>
-              <HistoryDivider enable={enableHistoryDivider} text={text?.history} />
-              <Item {...itemProps} {...item} />
-            </Fragment>
-          );
-        })}
+      <Flexbox className={cx(styles.container, className)} height={'100%'}>
+        <div style={{ flex: '1' }}>
+          <List {...props} />
+        </div>
       </Flexbox>
     );
   },

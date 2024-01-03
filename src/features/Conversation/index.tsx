@@ -15,7 +15,6 @@ import { useInitConversation } from './hooks/useInitConversation';
 const useStyles = createStyles(({ css, responsive, stylish, cx }, fontSize: number = 14) =>
   cx(
     css`
-      overflow: hidden scroll;
       height: 100%;
 
       ${responsive.mobile} {
@@ -55,13 +54,10 @@ const Conversation = memo<ConversationProps>(({ mobile, chatInput }) => {
   useInitConversation();
 
   return (
-    <Flexbox flex={1} style={{ position: 'relative' }}>
-      <div style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
-        <div className={styles} ref={ref}>
-          {!mobile && <SafeSpacing />}
-          <ChatList />
-          <ChatScrollAnchor />
-        </div>
+    <Flexbox data-id={'conversation'} flex={1} style={{ position: 'relative' }}>
+      <div className={styles} ref={ref}>
+        <ChatList />
+        <ChatScrollAnchor />
         <BackBottom target={ref} text={t('backToBottom')} />
       </div>
       {chatInput}

@@ -1,5 +1,6 @@
 import { type AlertProps, ChatItem, type ChatItemProps } from '@lobehub/ui';
 import { ActionEvent, copyToClipboard } from '@lobehub/ui';
+import { useWhyDidYouUpdate } from 'ahooks';
 import { App } from 'antd';
 import { FC, ReactNode, memo, useCallback, useMemo, useState } from 'react';
 
@@ -98,6 +99,7 @@ const Item = memo<ChatListItemProps>((props) => {
     renderItems,
     ...item
   } = props;
+  useWhyDidYouUpdate('Item', props);
 
   const [editing, setEditing] = useState(false);
 
